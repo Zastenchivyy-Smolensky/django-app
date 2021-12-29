@@ -33,6 +33,7 @@
                     <a href="{% url "index" %}"><th>{{app.title}}</th></a>   
                     <th>{{app.tech}}</th>
                     <td><a href="{%url "edit" app.id %}">編集</a></td>
+                    <td><a href="{%url "delete" app.id%}">削除</a></td>
                 </tr>
             {% endfor %}
         </table>

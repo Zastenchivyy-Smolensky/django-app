@@ -76,4 +76,17 @@ def edit(request,num):
         "form": AppsForm(instance=obj),
     }
     return render(request, "app/edit.html" ,params)
+
+def delete(request,num):
+    apps=Apps.objects.get(id=num)
+    if(request.method=="POST"):
+        apps.delete()
+        return redirect(to="/app/index")
+    messages.success(request,"プロダクトを削除しました")
+    params={
+        "title":"削除画面",
+        "id":num,
+        "obj":apps
+    }
+    return render(request,"app/delete.html",params)
     
