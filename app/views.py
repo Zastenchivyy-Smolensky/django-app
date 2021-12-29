@@ -2,8 +2,9 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import redirect
-from .models import Apps
-from .forms import AppForm,AppsForm
+from.models import Apps
+from .forms import AppForm
+from .forms import AppsForm
 def top(request):
     params={
         "title":"制作アプリ"
@@ -46,24 +47,33 @@ def index(request):
     return render(request,"app/index.html",params)
 
 def add(request):
+    
+    if(request.method=="POST"):
+        obj=AppsForm()
+        appform=AppsForm(request.POST,instance=obj)
+        appform.save()
+        
+        return redirect(to="/app/index")
+    messages.success(request,+"追加しました")
     params={
         "title":"投稿画面",
-        "form":AppsForm
+        "form":AppsForm()
     }
-    if(request.method=="POST"):
-        file=request.POST["file"]
-        title=request.POST["title"]
-        giturl=request.POST["giturl"]
-        link=request.POST["link"]
-        tech=request.POST["tech"]
-        content=request.POST["content"]
-        a1=request.POST["a1"]
-        
-        apps=Apps(file=file,title=title,giturl=giturl,link=link,tech=tech,\
-            content=content,a1=a1)
-        apps.save()
-        messages.success(request,title+"を追加しました")
-        return redirect(to="/app/index")
     
     
     return render(request,"app/add.html",params)
+
+def edit(request,num):
+    obj=Apps.objects.get(id=num)
+    if (request.method == "POST"):
+        apps=AppsForm(request.POST,instance=obj)
+        apps.save()
+        return redirect(to="/app/index")
+    messages.success(request,"プロダクトを編集しました")
+    params={
+        "title":"編集画面",
+        "id":num,
+        "form": AppsForm(instance=obj),
+    }
+    return render(request, "app/edit.html" ,params)
+    

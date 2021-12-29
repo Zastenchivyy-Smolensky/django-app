@@ -7,5 +7,6 @@ urlpatterns = [
     path("signup",views.signup,name="signup"),
     path("login",views.login,name="login"),
     path("index",views.index, name="index"),
-    path("add",views.add ,name="add")
+    path("add",views.add ,name="add"),
+    path("edit/<int:num>", views.edit, name="edit"),
 ]
