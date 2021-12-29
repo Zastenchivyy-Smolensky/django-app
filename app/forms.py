@@ -1,8 +1,10 @@
 from django import forms
 from.models import Apps
+
 class AppForm(forms.Form):
     title=forms.CharField(label="title",\
         widget=forms.TextInput(attrs={"class":"forms-control"}))
+
 
     
 class AppsForm(forms.ModelForm):

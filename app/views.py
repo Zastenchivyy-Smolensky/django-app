@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from.models import Apps
 from .forms import AppForm
 from .forms import AppsForm
+from django.views.generic import DetailView
 def top(request):
     params={
         "title":"制作アプリ"
@@ -48,16 +49,17 @@ def index(request):
 
 def add(request):
     
-    if(request.method=="POST"):
-        obj=AppsForm()
-        appform=AppsForm(request.POST,instance=obj)
+    if(request.method == "POST"):
+        obj=Apps()
+        appform=AppsForm(request.POST, instance=obj)
         appform.save()
-        
         return redirect(to="/app/index")
-    messages.success(request,+"追加しました")
+    
+    
+    messages.success(request,"追加しました")
     params={
         "title":"投稿画面",
-        "form":AppsForm()
+        "form":AppsForm(),
     }
     
     
@@ -89,4 +91,5 @@ def delete(request,num):
         "obj":apps
     }
     return render(request,"app/delete.html",params)
-    
+class AppsDetail(DetailView):
+    model=Apps

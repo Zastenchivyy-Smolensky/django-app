@@ -27,13 +27,15 @@
                 <th>アプリの名前</th>
                 <th>技術スタック</th>
             </tr>
+            <a href="{%url "add" %}">投稿ページへ</a>
             {% for app in data %}
                 <tr>
                     <th>{{app.id}}</th>
-                    <a href="{% url "index" %}"><th>{{app.title}}</th></a>   
+                    <th>{{app.title}}</th>   
                     <th>{{app.tech}}</th>
                     <td><a href="{%url "edit" app.id %}">編集</a></td>
                     <td><a href="{%url "delete" app.id%}">削除</a></td>
+                    <td><a href="{%url "detail" app.id%}">詳細</a></td>
                 </tr>
             {% endfor %}
         </table>

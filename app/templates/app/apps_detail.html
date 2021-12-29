@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body class="container">
+    <h1 class="display-4 text-primary">
+        プロダクトの詳細ページ
+    </h1>
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>{{object.id}}</th>
+        </tr>
+        <tr>
+            <th>画像</th>
+            <th>{{object.file}}</th>
+        </tr>
+        <tr>
+            <th>アプリ名</th>
+            <th>{{object.title}}</th>
+        </tr>
+        <tr>
+            <th>GithubのURL</th>
+            <th>{{object.url}}</th>
+        </tr>
+        <tr>
+            <th>Link</th>
+            <th>{{object.link}}</th>
+        </tr>
+        <tr>
+            <th>技術スタック</th>
+            <th>{{object.tech}}</th>
+        </tr>
+        <tr>
+            <th>このプロダクトを作るきっかけとなったもの</th>
+            <th>{{object.content}}</th>
+        </tr>
+        <tr>
+            <th>こだわり</th>
+            <th>{{object.a1}}</th>
+        </tr>
+    </table>
+    <a href="{%url "index" %}">戻る</a>
+</body>
+</html>

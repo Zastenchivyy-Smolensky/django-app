@@ -13,7 +13,7 @@
         {{title}}
     </h1>
     <p>自分が作ったWebサイトやアプリを書いてください</p>
-    <form action="{%url "add" %}" method="post">
+    <form action="{% url "add" %}" method="post">
         {% csrf_token %}
         <table class="table">
             {{form.as_table}}
