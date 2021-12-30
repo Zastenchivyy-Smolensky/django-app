@@ -4,8 +4,9 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from.models import Apps
 from .forms import AppForm
-from .forms import AppsForm
+from .forms import AppsForm,FindForm
 from django.views.generic import DetailView
+from django.core.paginator import Paginator
 def top(request):
     params={
         "title":"制作アプリ"
@@ -31,17 +32,14 @@ def login(request):
     }
     return render(request,"app/login",params)
 
-def index(request):
-    
+def index(request,num=1):
+    data=Apps.objects.all()
+    page=Paginator(data,3)
     params={
         "title":"一覧ページ",
+        "data":page.get_page(num),
     }
-    if(request.method=="POST"):
-        tmp=request.POST["title"]
-        item=Apps.objects.get(title=tmp)
-        params["data"]=[item]
-    else:
-        params["data"]=Apps.objects.all()
+    
     return render(request,"app/index.html",params)
 
 def add(request):
@@ -97,5 +95,20 @@ def delete(request,num):
         "obj":apps
     }
     return render(request,"app/delete.html",params)
+def find(request):
+    if(request.method=="POST"):
+        form=FindForm(request.POST)
+        find=request.POST["find"]
+        data=Apps.objects.filter(title=find)
+    else:
+        form=FindForm()
+        data=Apps.objects.all()
+    params={
+        "title":"検索ページ",
+        "form":form,
+        "data":data,
+    }
+    return render(request,"app/find.html",params)
 class AppsDetail(DetailView):
     model=Apps
+    

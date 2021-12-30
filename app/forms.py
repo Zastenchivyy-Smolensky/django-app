@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.widgets import TextInput
 from.models import Apps
 
 class AppForm(forms.Form):
@@ -16,6 +17,9 @@ class AppForm(forms.Form):
         widget=forms.TextInput(attrs={"class":"forms-control"}))
     a1=forms.CharField(label="a1",\
         widget=forms.TextInput(attrs={"class":"forms-control"}))
+class FindForm(forms.Form):
+    find=forms.CharField(label="find",\
+        widget=TextInput(attrs={"class":"forms-control"}))
 class AppsForm(forms.ModelForm):
     class Meta:
         model=Apps
