@@ -1,10 +1,11 @@
+from django.core import paginator
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import redirect
-from.models import Apps
+from.models import Apps,Message
 from .forms import AppForm
-from .forms import AppsForm,FindForm
+from .forms import AppsForm,FindForm,MessageForm
 from django.views.generic import DetailView
 from django.core.paginator import Paginator
 def top(request):
@@ -111,4 +112,17 @@ def find(request):
     return render(request,"app/find.html",params)
 class AppsDetail(DetailView):
     model=Apps
-    
+
+def message(request,page=1):
+    if(request.method=="POST"):
+        obj=Message()
+        form=MessageForm(request.POST,instance=obj)
+        form.save()
+    data=Message.objects.all().reverse()
+    paginator=Paginator(data,5)
+    params={
+        "title":"コメント",
+        "form":MessageForm(),
+        "data":paginator.get_page(page)
+    }
+    return render(request,"app/message.html",params)

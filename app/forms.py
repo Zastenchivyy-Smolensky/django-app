@@ -1,6 +1,8 @@
 from django import forms
+from django.db.models import fields
+from django.forms import widgets
 from django.forms.widgets import TextInput
-from.models import Apps
+from.models import Apps,Message
 
 class AppForm(forms.Form):
     file=forms.FileField(label="file",\
@@ -24,3 +26,14 @@ class AppsForm(forms.ModelForm):
     class Meta:
         model=Apps
         fields=["file","title","giturl","link","tech","content","a1"]
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model=Message
+        fields=["title","content","apps"]
+        
+        widgets={
+            "title":forms.TextInput(attrs={"class":"form-control form-control-sm"}),
+            "contnet":forms.Textarea(attrs={"class":"form-control form-control-sm","row":2}),
+            "apps":forms.Select(attrs={"class":"form-control form-control-sm"}),
+        }

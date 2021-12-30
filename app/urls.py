@@ -12,5 +12,7 @@ urlpatterns = [
     path("edit/<int:num>", views.edit, name="edit"),
     path("delete/<int:num>",views.delete,name="delete"),
     path("find",views.find, name="find"),
-    path("detail/<int:pk>",AppsDetail.as_view(),name="detail")
+    path("detail/<int:pk>",AppsDetail.as_view(),name="detail"),
+    path("message/", views.message, name="message"),
+    path("message/<int:page>",views.message, name="message")
 ]
