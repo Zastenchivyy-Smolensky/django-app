@@ -1,3 +1,5 @@
+from django import http
+from django.contrib.messages.api import success
 from django.core import paginator
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
@@ -8,6 +10,7 @@ from .forms import AppForm
 from .forms import AppsForm,FindForm,MessageForm,UserForm,GoodForm
 from django.views.generic import DetailView
 from django.core.paginator import Paginator
+from django.contrib.auth import authenticate,login,logout
 def top(request):
     params={
         "title":"制作アプリ"
@@ -141,4 +144,26 @@ def signup(request):
         return redirect(to="/app/index")
     
     return render(request,"app/signup.html",params)    
+
+def login(request):
+    params={
+        "title":"ログイン",
+        "form":UserForm()
+    }
     
+    if(request.method=="POST"):
+        login_user=UserForm(request.POST)
+        user=request.POST["user"]
+        mail=request.POST["mail"]
+        password=request.POST["password"]
+        
+        if user:
+            if(user==login_user.user):
+                if(mail==login_user.mail):
+                    if(password==login_user.password):
+                        return redirect(to="app/index")
+            else:
+                return print("アカウントが有効ではありません")
+        else:
+            return print("ログインに失敗しました")
+    return render(request,"app/login.html",params)
