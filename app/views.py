@@ -35,14 +35,11 @@ def index(request):
     
     params={
         "title":"一覧ページ",
-        "form":AppForm(),
-        "data":[],
     }
     if(request.method=="POST"):
         tmp=request.POST["title"]
         item=Apps.objects.get(title=tmp)
         params["data"]=[item]
-        params["form"]=AppForm(request.POST)
     else:
         params["data"]=Apps.objects.all()
     return render(request,"app/index.html",params)
@@ -50,16 +47,25 @@ def index(request):
 def add(request):
     
     if(request.method == "POST"):
+        file=request.POST["file"]
+        title=request.POST["title"]
+        giturl=request.POST["giturl"]
+        link=request.POST["link"]
+        tech=request.POST["tech"]
+        content=request.POST["content"]
+        a1=request.POST["a1"]
+        app=Apps(file=file,title=title,giturl=giturl,link=link,tech=tech,\
+            content=content,a1=a1)
+        app.save()
         obj=Apps()
-        appform=AppsForm(request.POST, instance=obj)
-        appform.save()
+        
         return redirect(to="/app/index")
     
     
     messages.success(request,"追加しました")
     params={
         "title":"投稿画面",
-        "form":AppsForm(),
+        "form":AppForm(),
     }
     
     

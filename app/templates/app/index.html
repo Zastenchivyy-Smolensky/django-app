@@ -16,11 +16,7 @@
         <p class="h5 mt-4">
             {{message|safe}}
         </p>
-        <form action="{% url "index" %}" method="post">
-            {% csrf_token %}
-            {{form}}
-            <input type="submit" value="検索">
-        </form>
+        
         <table class="table">
             <tr>
                 <th>ID</th>
