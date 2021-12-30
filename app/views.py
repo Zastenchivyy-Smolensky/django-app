@@ -3,9 +3,9 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import redirect
-from.models import Apps,Message
+from.models import Apps,Message,User
 from .forms import AppForm
-from .forms import AppsForm,FindForm,MessageForm
+from .forms import AppsForm,FindForm,MessageForm,UserForm,GoodForm
 from django.views.generic import DetailView
 from django.core.paginator import Paginator
 def top(request):
@@ -126,3 +126,19 @@ def message(request,page=1):
         "data":paginator.get_page(page)
     }
     return render(request,"app/message.html",params)
+
+def signup(request):
+    params={
+        "title":"ユーザー登録",
+        "form":UserForm(),
+    }
+    if (request.method=="POST"):
+        user=request.POST["user"]
+        mail=request.POST["mail"]
+        password=request.POST["password"]
+        user=User(user=user,mail=mail,password=password)
+        user.save()
+        return redirect(to="/app/index")
+    
+    return render(request,"app/signup.html",params)    
+    

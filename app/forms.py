@@ -2,7 +2,7 @@ from django import forms
 from django.db.models import fields
 from django.forms import widgets
 from django.forms.widgets import TextInput
-from.models import Apps,Message
+from.models import Apps,Message,User,Good
 
 class AppForm(forms.Form):
     file=forms.FileField(label="file",\
@@ -37,3 +37,14 @@ class MessageForm(forms.ModelForm):
             "contnet":forms.Textarea(attrs={"class":"form-control form-control-sm","row":2}),
             "apps":forms.Select(attrs={"class":"form-control form-control-sm"}),
         }
+class UserForm(forms.Form):
+    user=forms.CharField(max_length=100,\
+        widget=forms.TextInput(attrs={"class":"form-control","row":2}))
+    mail=forms.EmailField(max_length=1000,\
+        widget=forms.EmailInput(attrs={"class":"form-control"}))
+    password=forms.CharField(max_length=100,\
+        widget=forms.PasswordInput(attrs={"class":"form-control"})) 
+class GoodForm(forms.ModelForm):
+    class Meta:
+        model=Good
+        fields=["user","message"]
