@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import redirect
-from.models import Apps,Message,User
+from.models import Apps,Message,User,Good
 from .forms import AppForm
 from .forms import AppsForm,FindForm,MessageForm,UserForm,GoodForm
 from django.views.generic import DetailView
@@ -167,3 +167,18 @@ def login(request):
         else:
             return print("ログインに失敗しました")
     return render(request,"app/login.html",params)
+
+def good(request,good_id):
+    good_msg=Message.objects.get(id=good_id)
+    is_good=Good.objects.filter(owner=request.user) \
+        .filter(message=good_msg).count()
+    if is_good>0:
+        message.success(request,"すでにメッセージにはGoodしています")
+        return redirect(to="/app/index")
+    good_msg.good_count+=1
+    good_msg.save()
+    good=Good()
+    good.user=request.user
+    good.save()
+    message.success(request,"メッセージをGoodにしました")
+    return redirect(to="/app/index")

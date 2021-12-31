@@ -44,6 +44,7 @@ class UserForm(forms.Form):
         widget=forms.EmailInput(attrs={"class":"form-control"}))
     password=forms.CharField(max_length=100,\
         widget=forms.PasswordInput(attrs={"class":"form-control"})) 
+
 class GoodForm(forms.ModelForm):
     class Meta:
         model=Good
